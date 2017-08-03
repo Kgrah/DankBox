@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "629563826580",
+    "project_id": "firebase-dankbox"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629563826580:android:36b1fa144d4ae56c",
+        "android_client_info": {
+          "package_name": "com.example.lukecaughell.dankbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629563826580-ogng89usqlgv5vnnh4ah6ekic7i9bpnj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "629563826580-nrshu6qgoefi2r6v6ng4fuacfro4so08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lukecaughell.dankbox",
+            "certificate_hash": "a548977c6914cc2df6e5e66ea01c3b4bbf3b340f"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV4O91w1446fXGStK1jOeEAcTXOZvou3I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
