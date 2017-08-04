@@ -151,8 +151,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private  void finishLogin(){
-        setContentView(R.layout.activity_main);
-        //finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 
