@@ -7,6 +7,7 @@ package com.example.lukecaughell.dankbox;
 public class ImageData {
     private String image_title;
     private Integer image_id;
+    private String image_location;
 
     public String getImage_title() {
         return this.image_title;
@@ -22,5 +23,9 @@ public class ImageData {
 
     public void setImage_id(Integer android_image_url) {
         this.image_id = android_image_url;
+    }
+
+    public void setImage_Location(String location) {
+        this.image_location = location;
     }
 }
