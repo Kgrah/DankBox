@@ -1,23 +1,52 @@
+// Data flow:
+    // connect to FireBase storage
+    // for each image in FireBase storage
+    //      download image
+    //      add image to ArrayList
+    //      send ArrayList to adapter
+    // adapter { for each image in ArrayList
+    //              display image }
+
+
+
 package com.example.lukecaughell.dankbox;
 
 import android.media.Image;
+import android.net.Uri;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+
+/*import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;*/
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    String path = Environment.getRootDirectory().toString();
+
+    String path = "sdcard/doge_meme.jpg";
+    Uri file = Uri.fromFile(new File(path));
+    private StorageReference mStorageRef;
+
 
     private final String image_titles[] = {
-            "Img1",
-            "Img2",
-            "Img3",
-            "Img4"
+            "Doge Memes",
+            "Nerf Memes",
+            "Spiderman Memes",
+            "Yodawg Memes"
     };
 
     private final Integer image_ids[] = {
@@ -32,23 +61,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<ImageData> ImageDatas = prepareData();
-        MyAdapter adapter = new MyAdapter(getApplication(), ImageDatas);
+        ArrayList<ImageData> Images = prepareData();
+        MyAdapter adapter = new MyAdapter(getApplication(), Images);
         recyclerView.setAdapter(adapter);
 
+        Button uploadButton = (Button) findViewById(R.id.upload_button);
+        uploadButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                Uri file = Uri.fromFile(new File("/sdcard/doge_meme.jpg"));
+                StorageReference riversRef = mStorageRef.child("/sdcard/doge_meme.jpg");
 
-        File f = new File(path);
-        File file[] = f.listFiles();
-        for (int i=0; i < file.length; i++)
-        {
-            ImageData imageData = new ImageData();
-            imageData.setImage_Location(file[i].getName());
-        }
+                riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+            }
+        });
     }
 
     private ArrayList<ImageData> prepareData() {
