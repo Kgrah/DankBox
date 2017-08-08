@@ -37,6 +37,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    String pathToImage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "doge_meme.jpg";
+
     String path = "sdcard/doge_meme.jpg";
     Uri file = Uri.fromFile(new File(path));
     private StorageReference mStorageRef;
@@ -71,16 +73,18 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(getApplication(), Images);
         recyclerView.setAdapter(adapter);
 
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
         Button uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
-                Uri file = Uri.fromFile(new File("/sdcard/doge_meme.jpg"));
-                StorageReference riversRef = mStorageRef.child("/sdcard/doge_meme.jpg");
+                Uri file = Uri.fromFile(new File(pathToImage));
+                StorageReference riversRef = mStorageRef.child(pathToImage);
 
                 riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
