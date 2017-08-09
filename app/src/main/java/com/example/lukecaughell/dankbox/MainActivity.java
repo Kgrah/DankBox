@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;*/
 
 import com.example.lukecaughell.dankbox.Classes.ImageData;
+import com.example.lukecaughell.dankbox.Classes.ImageList;
 import com.example.lukecaughell.dankbox.Classes.MyAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     Uri file = Uri.fromFile(new File(path));
     private StorageReference mStorageRef;
 
-
     private final String image_titles[] = {
             "Doge Memes",
             "Nerf Memes",
@@ -65,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ImageList images = new ImageList();
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        ArrayList<ImageData> Images = prepareData();
+        ArrayList<ImageData> Images = images.prepareData();
         MyAdapter adapter = new MyAdapter(getApplication(), Images);
         recyclerView.setAdapter(adapter);
 
@@ -98,17 +98,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });*/
-    }
-
-    private ArrayList<ImageData> prepareData() {
-        ArrayList<ImageData> theImage = new ArrayList<>();
-        for (int i = 0; i < image_titles.length; i++) {
-            ImageData imageData = new ImageData();
-            imageData.setImage_title(image_titles[i]);
-            imageData.setImage_id(image_ids[i]);
-            theImage.add(imageData);
-        }
-        return theImage;
     }
 
     public ImageData getImage() {
