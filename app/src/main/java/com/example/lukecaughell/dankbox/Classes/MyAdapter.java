@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lukecaughell.dankbox.LoginActivity;
+import com.example.lukecaughell.dankbox.MemeListActivity;
 import com.example.lukecaughell.dankbox.R;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                Intent intent = new Intent(view.getContext(), MemeListActivity.class);
                 view.getContext().startActivity(intent);
             }
         });

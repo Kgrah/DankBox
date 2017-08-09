@@ -39,6 +39,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int IMAGE_GALLERY_REQUEST = 20;
     String pathToImage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "doge_meme.jpg";
 
     String path = "sdcard/doge_meme.jpg";
@@ -77,14 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        Button memesListButton = (Button) findViewById(R.id.memes_list_button);
-        memesListButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                moveToMemeListActivity();
-            }
-        });
-
-        Button uploadButton = (Button) findViewById(R.id.upload_button);
+        /*Button uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
                 Uri file = Uri.fromFile(new File(pathToImage));
@@ -103,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
     }
 
     private ArrayList<ImageData> prepareData() {
@@ -117,13 +111,25 @@ public class MainActivity extends AppCompatActivity {
         return theImage;
     }
 
-    public void moveToMemeListActivity () {
-        Intent intent = new Intent(this, MemeListActivity.class);
-        startActivity(intent);
-    }
-
     public ImageData getImage() {
         return null;
+    }
+
+    public void onImageGalleryClicked(View v) {
+        // do some stuff
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK); // <-- String
+
+        //Data location
+        File pictureDirectory  = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        String pictureDirectoryPath = pictureDirectory.getPath();
+        //convert to Uri
+
+        Uri data = Uri.parse(pictureDirectoryPath);
+
+        //set data and type
+        photoPickerIntent.setDataAndType(data,"image/jpg" );
+
+        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
     }
 
 }

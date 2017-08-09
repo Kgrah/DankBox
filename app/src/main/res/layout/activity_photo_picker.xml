@@ -6,31 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.lukecaughell.dankbox.ImagePickerActivity">
 
-    <ImageView
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgPicture"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.23" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnTakePhoto"
-        android:layout_weight="1" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnImageGallery"
-        android:layout_weight="1"
-        android:onClick="onImageGalleryClicked"
-        android:nestedScrollingEnabled="true" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
