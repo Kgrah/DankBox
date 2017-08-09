@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 import java.io.File;
 
@@ -14,7 +13,7 @@ import java.io.File;
  * Created by kyle_ on 8/7/2017.
  */
 
-public class ColorCaptureActivity extends AppCompatActivity {
+public class ImagePickerActivity extends AppCompatActivity {
     public static final int IMAGE_GALLERY_REQUEST = 20;
     /*@Override
     public int getCurrentMenuId() {return R.id.;}*/
@@ -22,7 +21,7 @@ public class ColorCaptureActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_color_capture);
+        setContentView(R.layout.activity_photo_picker);
     }
 
     public void onImageGalleryClicked(View v) {
@@ -37,7 +36,7 @@ public class ColorCaptureActivity extends AppCompatActivity {
         Uri data = Uri.parse(pictureDirectoryPath);
 
         //set data and type
-        photoPickerIntent.setDataAndType(data,"image/*" );
+        photoPickerIntent.setDataAndType(data,"image/jpg" );
 
         startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
     }

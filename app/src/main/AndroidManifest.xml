@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MemeListActivity" />
-        <activity android:name=".ColorCaptureActivity"></activity>
+        <activity android:name=".ImagePickerActivity"></activity>
     </application>
 
 </manifest>

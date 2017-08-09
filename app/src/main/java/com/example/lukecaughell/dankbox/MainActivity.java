@@ -122,4 +122,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public ImageData getImage() {
+        return null;
+    }
+
 }
