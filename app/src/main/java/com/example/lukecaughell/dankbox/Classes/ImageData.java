@@ -1,4 +1,4 @@
-package com.example.lukecaughell.dankbox;
+package com.example.lukecaughell.dankbox.Classes;
 
 /**
  * Created by kylelgrah on 8/3/17.

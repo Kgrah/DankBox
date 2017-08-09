@@ -11,7 +11,7 @@
 
 package com.example.lukecaughell.dankbox;
 
-import android.media.Image;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -26,6 +26,8 @@ import android.widget.Button;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;*/
 
+import com.example.lukecaughell.dankbox.Classes.ImageData;
+import com.example.lukecaughell.dankbox.Classes.MyAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -75,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        Button memesListButton = (Button) findViewById(R.id.memes_list_button);
+        memesListButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                moveToMemeListActivity();
+            }
+        });
+
         Button uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
@@ -108,5 +117,9 @@ public class MainActivity extends AppCompatActivity {
         return theImage;
     }
 
+    public void moveToMemeListActivity () {
+        Intent intent = new Intent(this, MemeListActivity.class);
+        startActivity(intent);
+    }
 
 }

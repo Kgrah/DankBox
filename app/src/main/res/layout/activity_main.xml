@@ -30,4 +30,14 @@
         tools:layout_editor_absoluteY="466dp"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Button
+        android:id="@+id/memes_list_button"
+        android:layout_width="88dp"
+        android:layout_height="45dp"
+        android:onClick="onPickAnImageClick"
+        android:text="Choose an image"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="466dp" />
+
 </android.support.constraint.ConstraintLayout>

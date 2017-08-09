@@ -1,25 +1,24 @@
-package com.example.lukecaughell.dankbox;
+package com.example.lukecaughell.dankbox.Classes;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
+import com.example.lukecaughell.dankbox.LoginActivity;
+import com.example.lukecaughell.dankbox.R;
+
 import java.util.ArrayList;
 
 /**
  * Created by kylelgrah on 8/3/17.
  */
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<ImageData> galleryList;
     private Context context;
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import java.io.File;
 
@@ -37,9 +38,7 @@ public class ColorCaptureActivity extends AppCompatActivity {
 
         //set data and type
         photoPickerIntent.setDataAndType(data,"image/*" );
-        
+
         startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
     }
-
-
 }
