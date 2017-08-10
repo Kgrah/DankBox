@@ -14,6 +14,7 @@ package com.example.lukecaughell.dankbox;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 /*import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;*/
 import com.example.lukecaughell.dankbox.Classes.ImageData;
 import com.example.lukecaughell.dankbox.Classes.ImageList;
 import com.example.lukecaughell.dankbox.Classes.MyAdapter;
+import com.example.lukecaughell.dankbox.Classes.Uploader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,29 +46,16 @@ public class MainActivity extends AppCompatActivity {
     private static final int IMAGE_GALLERY_REQUEST = 20;
     String pathToImage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "doge_meme.jpg";
 
-    String path = "sdcard/doge_meme.jpg";
-    Uri file = Uri.fromFile(new File(path));
     private StorageReference mStorageRef;
 
-    private final String image_titles[] = {
-            "Doge Memes",
-            "Nerf Memes",
-            "Spiderman Memes",
-            "Yodawg Memes"
-    };
-
-    private final Integer image_ids[] = {
-            R.drawable.doge,
-            R.drawable.nerf,
-            R.drawable.spiderman,
-            R.drawable.yodawg
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageList images = new ImageList();
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.imagegallery);
         recyclerView.setHasFixedSize(true);
@@ -76,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(getApplication(), Images);
         recyclerView.setAdapter(adapter);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference();
+
 
         /*Button uploadButton = (Button) findViewById(R.id.upload_button);
         uploadButton.setOnClickListener(new View.OnClickListener(){
@@ -100,12 +90,8 @@ public class MainActivity extends AppCompatActivity {
         });*/
     }
 
-    public ImageData getImage() {
-        return null;
-    }
-
     public void onImageGalleryClicked(View v) {
-        // do some stuff
+      /*  // do some stuff
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK); // <-- String
 
         //Data location
@@ -118,7 +104,31 @@ public class MainActivity extends AppCompatActivity {
         //set data and type
         photoPickerIntent.setDataAndType(data,"image/jpg" );
 
-        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);
+        startActivityForResult(photoPickerIntent, IMAGE_GALLERY_REQUEST);*/
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, IMAGE_GALLERY_REQUEST);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == IMAGE_GALLERY_REQUEST && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
+
+            StorageReference filePathReference = mStorageRef.child("Photos")
+                    .child(uri.getLastPathSegment());
+
+            filePathReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    Toast.makeText(MainActivity.this,"Upload Done", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
 }
