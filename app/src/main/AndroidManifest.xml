@@ -32,7 +32,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MemeListActivity" />
-        <activity android:name=".ImagePickerActivity"></activity>
     </application>
 
 </manifest>

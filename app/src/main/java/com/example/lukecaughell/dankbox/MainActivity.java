@@ -65,29 +65,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<ImageData> Images = images.prepareData();
         MyAdapter adapter = new MyAdapter(getApplication(), Images);
         recyclerView.setAdapter(adapter);
-
-
-
-        /*Button uploadButton = (Button) findViewById(R.id.upload_button);
-        uploadButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                Uri file = Uri.fromFile(new File(pathToImage));
-                StorageReference riversRef = mStorageRef.child(pathToImage);
-
-                riversRef.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-            }
-        });*/
     }
 
     public void onImageGalleryClicked(View v) {
