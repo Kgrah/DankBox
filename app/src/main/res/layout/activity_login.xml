@@ -13,6 +13,12 @@
     android:weightSum="1">
 
     <!-- Login progress -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="302dp"
+        android:layout_height="206dp"
+        app:srcCompat="@drawable/doge" />
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -21,18 +27,39 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
+    <EditText
+        android:id="@+id/login_email_address_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/login_password_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/normal_sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="loginButtonClick"
+        android:text="Sign in"
+        tools:text="Sign in" />
+
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create account" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:clickable="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="226dp"
-        android:layout_weight="0.77"
-        app:srcCompat="@drawable/doge" />
+        android:layout_height="wrap_content"
+        android:clickable="true" />
 
     <Button
         android:id="@+id/buttonDev"

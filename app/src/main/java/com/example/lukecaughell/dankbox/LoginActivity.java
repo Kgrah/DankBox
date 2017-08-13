@@ -1,56 +1,32 @@
 package com.example.lukecaughell.dankbox;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lukecaughell.dankbox.Classes.Router;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A login screen that offers login via email/password.
@@ -58,10 +34,13 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, OnClickListener{
 
     private SignInButton googleButton;
+    private Button normalSignInButton;
     private GoogleSignInOptions signInOptions;
     private GoogleApiClient googleApiClient;
     //Arbitrary number
     private static int RC_SIGN_IN = 100;
+    private FirebaseAuth mAuth;
+    private static final String TAG = "EmailPassword";
 
 
     @Override
@@ -71,6 +50,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         googleButton = (SignInButton) findViewById(R.id.sign_in_button);
         googleButton.setOnClickListener(this);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        normalSignInButton = (Button) findViewById(R.id.normal_sign_in_button);
+        normalSignInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fireBaseUserSignin();
+            }
+        });
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -94,6 +83,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         //signIn();
 
 
+        Button signupButton = (Button) findViewById(R.id.sign_up_button);
+        signupButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveToSignupActivity();
+            }
+        });
     }
     @Override
     public void onClick(View v){
@@ -154,7 +150,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
 
+    public void moveToSignupActivity() {
+        Intent intent = new Intent(this,SignupActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -162,4 +162,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Toast.makeText(this, "Login Failed", Toast.LENGTH_LONG).show();
     }
 
+    public void fireBaseUserSignin() {
+        EditText email_text = (EditText) findViewById(R.id.login_email_address_text);
+        EditText pass_edit_text = (EditText) findViewById(R.id.login_password_text);
+
+        String emailAddress = email_text.getText().toString();
+        String password = pass_edit_text.getText().toString();
+        mAuth.signInWithEmailAndPassword(emailAddress,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    Log.d(TAG,"signInWithEmail:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    Toast.makeText(LoginActivity.this,user.getEmail() +" signed in.",Toast.LENGTH_LONG).show();
+                    finishLogin();
+                }
+                else {
+                    Log.w(TAG,"signInwithEmail:failure",task.getException());
+                    Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 }
